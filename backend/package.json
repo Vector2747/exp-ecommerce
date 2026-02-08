@@ -12,8 +12,12 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "@clerk/express": "^1.7.69",
+    "cloudinary": "^2.8.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "inngest": "^3.51.0",
+    "mongoose": "^8.19.3",
     "projet_app_mod": "file:.."
   }
 }

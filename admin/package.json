@@ -14,6 +14,7 @@
     "projet_app_mod": "file:..",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    
     "vite": "^7.2.4"
   },
   "devDependencies": {

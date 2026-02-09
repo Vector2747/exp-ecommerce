@@ -6,13 +6,17 @@ export const ingest = new Inngest({ id : "AnyBuy"})
 
 const syncUser = ingest.createFunction(
     { id : "sync-user"},
-    {event : "clerck/user.created"},
+    {event : "clerk/user.created"},
     async ({ event }) => {
         await connectDB();
-        const { id, email_adresses, first_name, last_name, image_url } = event.data;
+        //const { id, email_adresses, first_name, last_name, image_url } = event.data;
+        const { id, email_addresses, first_name, last_name, image_url } = event.data;
+
+
         const newUser = {
             clerkId : id,
-            email : email_adresses[0]?.email_adress,
+            //email : email_adresses[0]?.email_adress,
+            email: email_addresses?.[0]?.email_address,
             name : `${first_name || ""} ${last_name || ""}` || "User",
             imageURL : image_url || "",
             adresses : [],
@@ -24,7 +28,7 @@ const syncUser = ingest.createFunction(
 
 const deleteUserFromDB = ingest.createFunction(
     { id : "delete-user-from-db"},
-    { event : "clerck/user.deleted"},
+    { event : "clerk/user.deleted"},
     async ({ event }) => {
         await connectDB();
         

@@ -4,6 +4,9 @@ export async function addAddress (req,res){
     try {
         const { label, fullName, streetAddress, city, state, ZIPcode, phoneNumber, isDefault } = req.body;
 
+        if(!label || !fullName || !streetAddress || !city || !state || !ZIPcode || !phoneNumber){
+            return res.status(400).json({ message : "Tous les champs sont obligatoires"})
+        }
         const user = req.user;
         if(isDefault){
             user.addresses.forEach(addr => {
@@ -111,7 +114,8 @@ export async function addToWishlist (req,res){
 
 export async function getWishlist (req,res){
     try {
-        const user = req.user;
+        // on utilise "populte" car wishlist est un tableau d'id de produits, et on veux les infos du produit
+        const user = await User.findById(req.user._id).populate("wishlist");
         res.status(200).json({ wishlist : user.wishlist });
     } catch (error) {
         console.error("Erreur lors de la recuperation de la wishlist", error);

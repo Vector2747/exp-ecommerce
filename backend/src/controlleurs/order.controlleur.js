@@ -1,6 +1,7 @@
 import { Product } from "../models/product.model.js";
 import { Order } from "../models/order.model.js";
 import { Review } from "../models/review.model.js";
+import { set } from "mongoose";
 
 export async function createOrder (req,res){
     try {
@@ -48,15 +49,19 @@ export async function createOrder (req,res){
 
 export async function getOrders (req,res){
     try {
-        const order = await Order.find({ clerkId : req.user.clerkId}).populate("orderItems.product").sort({ createdAt : -1});
+        const orders = await Order.find({ clerkId : req.user.clerkId}).populate("orderItems.product").sort({ createdAt : -1});
 
         // verifier si la commande a ete commente
+        const orderIds = orders.map(order => order._id);
+        const reviews = await Review.find({ orderId : { $in : orderIds}})
+        const reviewedOrderIds = new set(reviews.map(review => review.orderId.toString()));
+
         const orderWithComments = await Promise.all(
-            order.map(async (order) => {
+            orders.map(async (order) => {
                 const review = await Review.findOne({ orderId : order._id});
                 return {
                     ...order.toObject(),
-                    hasReviewed : !!review,
+                    hasReviewed : reviewedOrderIds.has(order._id.toString()),
                 };
             })
         );

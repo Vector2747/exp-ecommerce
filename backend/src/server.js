@@ -9,6 +9,7 @@ import { functions, ingest} from "./config/ingest.js";
 
 import adminRoutes from "./routes/admin.route.js";
 import userRoutes from "./routes/user.route.js";
+import orderRoutes from "./routes/order.route.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/ingest", serve({client:ingest, functions:functions}))//  serve() e
 
 app.use("/api/admin", adminRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/orders", orderRoutes)
 
 app.get("/api/calling", (req,res) =>{
     res.status(200).json({message: "succes"})// donc le statut 200 veux dire succes et 500 echec ?

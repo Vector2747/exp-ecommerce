@@ -42,12 +42,20 @@ export async function createReview(req,res){
         });
 
         // mettre a jour la note du produit
-        const product = await Product.findById(productId);
-        const reviews = Review.find({ productId });
-        const totalReview = reviews.reduce((sum, rev) => sum + rev.rating, 0);
-        product.averageRating = totalReview / reviews.length;
-        product.totalReveiws = reviews.length;
-        await product.save();
+        const reviews = await Review.find({ productId });
+        const totalRating = reviews.reduce((sum, rev) => sum + rev.rating, 0);
+        const updatedProduct = await Product.findByIdAndUpdate(productId, {
+            averageRating : totalRating / reviews.length,
+            totalReveiws : reviews.length,
+        },{
+            new : true,
+            runValidators : true
+        })
+        
+        if(!updatedProduct){
+            await Review.findByIdAndDelete(review._id);
+            return res.status(404).json({ message : "Produit non trouve, review annulee"})
+        }
 
         res.status(201).json({ message : "Review cree avec succes", review})
     } catch (error) {

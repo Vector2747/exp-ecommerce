@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { addAddress } from "../controlleurs/user.controlleur.js";
-import { protectRoute } from "../dingleware/auth.dingleware";
+import { protectRoute } from "../dingleware/auth.dingleware.js";
 import { getAddresses } from "../controlleurs/user.controlleur.js";
 import { updateAddress } from "../controlleurs/user.controlleur.js";
 import { deleteAddress } from "../controlleurs/user.controlleur.js";

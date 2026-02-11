@@ -22,6 +22,9 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(clerkMiddleware());//  clerkMiddleware() est un middleware qui permet de vérifier si l'utilisateur est connecté ou pas. Si l'utilisateur est connecté, il ajoute les informations de l'utilisateur dans la requête (req.user) et passe à la suite. Si l'utilisateur n'est pas connecté, il renvoie une erreur 401 (Unauthorized).
 
+// credentials : true permet d'autoriser les cookies et les en-tetes d'authentification dans les requetes cross-origin. cela est necessaire pour que le client puisse envoyer les cookies de session ou les jetons d'authentification avec les requetes vers l'api.sans ca le client ne pourra pas s'authentifier et acceder aux ressources proteges de l'api
+app.use(cors({origin : ENV.CLIENT_URL, credentials : true}))// cors() est un midleware qui perment de generer une erreur cors si le client n'est pas autorise a acceder a l'api. il prend en parametre un objet de configuration qui contien la propriete origine qui est l'url du client autorise a acceder a l'api
+
 app.use("/api/ingest", serve({client:ingest, functions:functions}))//  serve() est une fonction qui permet de créer une route pour les fonctions Inngest. Elle prend en paramètre l'instance Inngest et un tableau de fonctions. Elle crée une route /api/ingest qui écoute les événements et exécute les fonctions correspondantes.
 
 app.use("/api/admin", adminRoutes)

@@ -33,6 +33,7 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/reviews", reviewRoutes)
 app.use("/api/products", productRoutes)
 app.use("/api/cart", cartRoutes)
+//app.use("/api/payement", )
 
 app.get("/api/calling", (req,res) =>{
     res.status(200).json({message: "succes"})// donc le statut 200 veux dire succes et 500 echec ?

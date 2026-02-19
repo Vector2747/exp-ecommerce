@@ -83,7 +83,7 @@ export async function updateProduct(req,res){
                 });
             });
 
-            const uploadResults = await Promise.add(uploadPromises);
+            const uploadResults = await Promise.all(uploadPromises);
             product.images = uploadResults.map((result) => result.secure_url);
         }
 
@@ -147,8 +147,8 @@ export async function getAllClients(_,res){
 
 export async function getDashboardStatus(_,res){
     try {
-        const totalOrders = Order.countDocuments();
-        const totalResultat = Order.aggregate([
+        const totalOrders = await Order.countDocuments();
+        const totalResultat = await Order.aggregate([
             {
                 $group : {
                     _id : null,
@@ -157,9 +157,9 @@ export async function getDashboardStatus(_,res){
             },
         ])
 
-        const totalRevenue = totalResultat[0]?.totalReveStututututu || 0;
-        const totalClients = User.countDocuments();
-        const totalProducts = Product.countDocuments();
+        const totalRevenue = await totalResultat[0]?.totalReveStututututu || 0;
+        const totalClients = await User.countDocuments();
+        const totalProducts = await Product.countDocuments();
 
         res.status(200).json({
             totalOrders,

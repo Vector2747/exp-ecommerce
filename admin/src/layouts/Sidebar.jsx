@@ -52,7 +52,7 @@ console.log("user est la : ", user);
                                 {user?.firstName} {user?.lastName}
                             </p>
                             <p className="text-xs opacity-60 truncate">
-                                {user?.emailAddresses[0].emailAddress}
+                                {user?.emailAddresses?.[0]?.emailAddress}
                             </p>
                         </div>
                     </div>

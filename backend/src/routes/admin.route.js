@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProduct} from "../controlleurs/admin.controller.js";
+import { createProduct, deleteProduct} from "../controlleurs/admin.controller.js";
 import { getAllProducts } from "../controlleurs/admin.controller.js";
 import { updateProduct } from "../controlleurs/admin.controller.js";
 import { protectRoute } from "../dingleware/auth.dingleware.js";
@@ -18,6 +18,7 @@ router.use(protectRoute, adminOnly);
 router.post("/products", upload.array("images", 3), createProduct);
 router.get("/products", getAllProducts);
 router.put("/products/:id", upload.array("images", 3), updateProduct);
+router.delete("/products/:id", deleteProduct);
 
 router.get("/orders", getAllOrders);
 router.patch("/orders/:orderId/status", updateOrderStatus);

@@ -174,7 +174,7 @@ function ProductsPage() {
                     </button>
                     <button
                       className="btn btn-square btn-ghost text-error"
-                      onClick={() => deleteProductMutation.mutate(product._id)}
+                      onClick={() => {console.log("clicked", product._id);deleteProductMutation.mutate(product._id)}}
                     >
                       {deleteProductMutation.isPending ? (
                         <span className="loading loading-spinner"></span>
@@ -192,7 +192,7 @@ function ProductsPage() {
 
       {/* ADD/EDIT PRODUCT MODAL */}
 
-      <input type="checkbox" className="modal-toggle" checked={showModal} />
+      <input type="checkbox" className="modal-toggle" checked={showModal} readOnly />
 
       <div className="modal">
         <div className="modal-box max-w-2xl">

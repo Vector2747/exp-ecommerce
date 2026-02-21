@@ -40,12 +40,21 @@ app.get("/api/calling", (req,res) =>{
 })
 
 // make app ready for prod
-if(ENV.NODE_ENV === "production"){
+/*if(ENV.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname, "../admin/dist")))
 
     app.get("/{*any}", (req,res) => {
         res.sendFile(path.join(__dirname, "../admin", "dist", "index.html"))
     })
+}*/
+if(ENV.NODE_ENV === "production"){
+    // Static files
+    app.use(express.static(path.join(__dirname, "../../admin/dist")));
+
+    // SPA fallback
+    app.get("*", (req,res) => {
+        res.sendFile(path.join(__dirname, "../../admin/dist/index.html"));
+    });
 }
 
 app.listen(ENV.PORT, () => {

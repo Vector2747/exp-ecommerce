@@ -5,7 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 function OrdersPage(params) {
     const queryClient = useQueryClient();
 
-    const {data:ordersData, isLoading} = useQuery({
+    const {data:ordersData, isLoading, isError, error} = useQuery({
         queryKey : ["orders"],
         queryFn : orderApi.getAll
     })
@@ -43,6 +43,11 @@ function OrdersPage(params) {
               <p className="text-xl font-semibold mb-2">No orders yet</p>
               <p className="text-sm">Orders will appear here once customers make purchases</p>
             </div>
+          ) : isError ?(
+                <div className="text-center py-12 text-error">
+                    <p className="text-xl font-semibold mb-2">Failed to load orders</p>
+                    <p className="text-sm">{error?.message || "An error ocured"}</p>
+                </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="table">

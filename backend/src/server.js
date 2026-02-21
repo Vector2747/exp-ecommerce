@@ -47,7 +47,7 @@ app.get("/api/calling", (req,res) =>{
         res.sendFile(path.join(__dirname, "../admin", "dist", "index.html"))
     })
 }*/
-if(ENV.NODE_ENV === "production"){
+/*if(ENV.NODE_ENV === "production"){
     // Static files
     app.use(express.static(path.join(__dirname, "../../admin/dist")));
 
@@ -55,7 +55,11 @@ if(ENV.NODE_ENV === "production"){
     app.get("/*", (req,res) => {
         res.sendFile(path.join(__dirname, "../../admin/dist/index.html"));
     });
-}
+}*/
+app.get("/{*any}", (req, res) => {
+    
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 app.listen(ENV.PORT, () => {
     console.log(ENV.NODE_ENV+ENV.PORT+"Le serveur roule ma boule !")

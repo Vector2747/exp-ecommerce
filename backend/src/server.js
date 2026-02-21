@@ -57,8 +57,11 @@ app.get("/api/calling", (req,res) =>{
     });
 }*/
 app.get("/{*any}", (req, res) => {
-    
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+    app.use(express.static(path.join(__dirname, "../admin/dist")))
+
+    app.get("/{*any}", (req,res) => {
+        res.sendFile(path.join(__dirname, "public", "index.html"))
+    })
 });
 
 app.listen(ENV.PORT, () => {

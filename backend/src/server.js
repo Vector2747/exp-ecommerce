@@ -65,11 +65,15 @@ app.get("/api/calling", (req,res) =>{
 }*/
 
 if (ENV.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "public")));
+    app.use((req, res, next) => {
+        res.setHeader("Cache-Control", "no-store");
+        next();
+    });
+    app.use(express.static(path.join(__dirname, "public")));
 
-  app.get("/{*any}", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-  });
+    app.get("/{*any}", (req, res) => {
+        res.sendFile(path.join(__dirname, "public", "index.html"));
+    });
 }
 
 app.listen(ENV.PORT, () => {

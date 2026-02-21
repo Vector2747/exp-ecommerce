@@ -65,10 +65,10 @@ app.get("/api/calling", (req,res) =>{
 }*/
 
 if (ENV.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/public")));
+  app.use(express.static(path.join(__dirname, "public")));
 
   app.get("/{*any}", (req, res) => {
-    res.sendFile(path.join(__dirname, "backend/public/index.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
   });
 }
 

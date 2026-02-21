@@ -56,12 +56,20 @@ app.get("/api/calling", (req,res) =>{
         res.sendFile(path.join(__dirname, "../../admin/dist/index.html"));
     });
 }*/
-if (ENV.NODE_ENV === "production") {
+/*if (ENV.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../public")));
 
     app.get("/{*any}", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
 });
+}*/
+
+if (ENV.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "backend/public")));
+
+  app.get("/{*any}", (req, res) => {
+    res.sendFile(path.join(__dirname, "backend/public/index.html"));
+  });
 }
 
 app.listen(ENV.PORT, () => {

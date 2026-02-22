@@ -25,6 +25,8 @@ function ProductsPage() {
     queryFn: productApi.getAll,
   });
 
+  const productsArray = Array.isArray(products) ? products : products?.products ?? [];
+
   // creating, update, deleting
   const createProductMutation = useMutation({
     mutationFn: productApi.create,
@@ -132,7 +134,7 @@ function ProductsPage() {
 
       {/* PRODUCTS GRID */}
       <div className="grid grid-cols-1 gap-4">
-        {products?.map((product) => {
+        {productsArray?.map((product) => {
           const status = getStockStatusBadge(product.stock);
 
           return (

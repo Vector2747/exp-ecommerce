@@ -64,7 +64,7 @@ app.get("/api/calling", (req,res) =>{
 });
 }*/
 
-if (ENV.NODE_ENV === "production") {
+/*if (ENV.NODE_ENV === "production") {
     app.use((req, res, next) => {
         res.setHeader("Cache-Control", "no-store");
         next();
@@ -74,6 +74,19 @@ if (ENV.NODE_ENV === "production") {
     app.get("/{*any}", (req, res) => {
         res.sendFile(path.join(__dirname, "public", "index.html"));
     });
+}*/
+
+if (ENV.NODE_ENV === "production") {
+  const publicPath = path.join(__dirname, "public");
+  app.use(express.static(publicPath));
+
+  // SPA fallback : toutes les routes non-API renvoient index.html
+  app.get("/{*any}", (req, res) => {
+    if (req.path.startsWith("/api")) {
+      return res.status(404).send("API route not found");
+    }
+    res.sendFile(path.join(publicPath, "index.html"));
+  });
 }
 
 app.listen(ENV.PORT, () => {

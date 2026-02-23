@@ -6,8 +6,8 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build":"npm install --prefix backend && npm install --prefix admin && npm run build --prefix admin",
-    "start":"npm run start --prefix backend",
+    "build": "npm install --prefix backend && npm install --prefix admin && npm run build --prefix admin",
+    "start": "npm run start --prefix backend",
     "render-build": "cd admin && npm ci && npm run build && cd ../backend && npm ci"
   },
   "repository": {
@@ -21,5 +21,8 @@
     "url": "https://github.com/Vector2747/exp-ecommerce/issues"
   },
   "homepage": "https://github.com/Vector2747/exp-ecommerce#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@sentry/react": "^10.39.0"
+  }
 }

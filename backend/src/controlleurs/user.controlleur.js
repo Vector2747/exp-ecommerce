@@ -116,6 +116,7 @@ export async function getWishlist (req,res){
     try {
         // on utilise "populte" car wishlist est un tableau d'id de produits, et on veux les infos du produit
         const user = await User.findById(req.user._id).populate("wishlist");
+        console.log("GET WISHLIST CALLED");
         res.status(200).json({ wishlist : user.wishlist });
     } catch (error) {
         console.error("Erreur lors de la recuperation de la wishlist", error);

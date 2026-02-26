@@ -1,0 +1,37 @@
+import { useAuth } from "@clerk/clerk-expo";
+import axios from "axios"
+import { useEffect } from "react";
+
+//pour dev
+//const API_URL="http://localhost:3000/api"
+
+//pour prod
+const API_URL = "https://exp-ecommerce.onrender.com/api"
+
+const api = axios.create({
+    baseURL: API_URL,
+    headers: {
+        "Content-Type": "application/json"
+    }
+})
+
+export const useApi = () => {
+    const { getToken } = useAuth()
+
+    useEffect(()=>{
+        const interceptor = api.interceptors.request.use(async (config)=> {
+            const token = await getToken();
+            console.log("token : ", token)
+            if(token){
+                config.headers.Authorization = `Bearer ${token}`
+            }
+            return config
+        });
+
+        return () => {
+            api.interceptors.request.eject(interceptor)
+        }
+    },[getToken])
+
+    return api
+}

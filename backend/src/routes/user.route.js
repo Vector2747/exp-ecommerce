@@ -21,7 +21,7 @@ router.delete("/addresses/:addressId", deleteAddress);
 // les routes de wishlist
 
 router.post("/wishlist", addToWishlist);
-router.get("/wishlist/:productId", getWishlist);
+router.get("/wishlist", getWishlist);
 router.delete("/wishlist/:productId", deleteWishlist);
 
 export default router;

@@ -49,7 +49,7 @@ export async function addToCart (req,res){
             });
         }
 
-        const existingItem = cart.item.find((item) => { item.product.toString() === productId});
+        const existingItem = cart.items.find((item) => { item.product.toString() === productId});
         if(existingItem){
             // incrementation de la quantite
             const newQuantite = existingItem.quantity + 1;

@@ -3,7 +3,8 @@ import SafeScreen from "@/components/SafeScreen";
 import useProducts from "@/hooks/useProducts";
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
-import { View,Text, ScrollView, TouchableOpacity, TextInput, Image } from "react-native";
+import { View,Text, ScrollView, TouchableOpacity, TextInput, Image,Button } from "react-native";
+import * as Sentry from '@sentry/react-native';
 
 const ShopScreen = () => {
     const [ searchQuery, setSearchQuery] = useState("")
@@ -65,6 +66,7 @@ const ShopScreen = () => {
                         onChangeText={setSearchQuery}
                         />
                     </View>
+                    {/*<Button title='Try!' onPress={ () => { Sentry.captureException(new Error('First error')) }}/>*/}
                 </View>
 
                 {/* CATEGORY FILTER */}

@@ -12,6 +12,8 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
+import { Modal } from "react-native";
+import { useState } from "react";
 
 interface ProductsGridProps {
   isLoading: boolean;
@@ -25,7 +27,11 @@ const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
 
   const { isAddingToCart, addToCart } = useCart();
 
-  const handleAddToCart = (productId: string, productName: string) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<{ id: string; name: string } | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  /*const handleAddToCart = (productId: string, productName: string) => {
     addToCart(
       { productId, quantity: 1 },
       {
@@ -37,6 +43,10 @@ const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
         },
       }
     );
+  };*/
+  const handleAddToCart = (productId: string, productName: string) => {
+    setSelectedProduct({ id: productId, name: productName });
+    setModalVisible(true);
   };
 
   const renderProduct = ({ item: product }: { item: Product }) => (
@@ -127,17 +137,74 @@ const ProductsGrid = ({ products, isLoading, isError }: ProductsGridProps) => {
     );
   }
 
+  
+
   return (
-    <FlatList
-      data={products}
-      renderItem={renderProduct}
-      keyExtractor={(item) => item._id}
-      numColumns={2}
-      columnWrapperStyle={{ justifyContent: "space-between" }}
-      showsVerticalScrollIndicator={false}
-      scrollEnabled={false}
-      ListEmptyComponent={NoProductsFound}
-    />
+    <View>
+      <FlatList
+        data={products}
+        renderItem={renderProduct}
+        keyExtractor={(item) => item._id}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
+        ListEmptyComponent={NoProductsFound}
+      />
+      {/* Confirmation Modal */}
+      <Modal transparent animationType="fade" visible={modalVisible}>
+        <View className="flex-1 justify-center items-center bg-black/60 px-6">
+          <View className="bg-surface w-full rounded-3xl p-6">
+
+            <Text className="text-text-primary text-xl font-bold mb-3">
+              Add to Cart
+            </Text>
+
+            <Text className="text-text-secondary mb-6">
+              Add {selectedProduct?.name} to your cart?
+            </Text>
+
+            <View className="flex-row justify-end gap-4">
+              <TouchableOpacity
+                onPress={() => setModalVisible(false)}
+                className="px-4 py-2 rounded-xl bg-background-lighter"
+              >
+                <Text className="text-text-primary font-semibold">Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  if (!selectedProduct) return;
+
+                  addToCart(
+                    { productId: selectedProduct.id, quantity: 1 },
+                    {
+                      onSuccess: () => {
+                        setModalVisible(false);
+                        setShowSuccess(true);
+                        setTimeout(() => setShowSuccess(false), 2000);
+                      },
+                    }
+                  );
+                }}
+                className="px-4 py-2 rounded-xl bg-primary"
+              >
+                <Text className="text-background font-bold">Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      {/* Success Toast */}
+      {showSuccess && (
+        <View className="absolute top-20 left-6 right-6 bg-primary rounded-2xl p-4 flex-row items-center shadow-lg z-50">
+          <Ionicons name="checkmark-circle" size={20} color="#121212" />
+          <Text className="text-background font-bold ml-3 flex-1">
+            Added to cart successfully!
+          </Text>
+        </View>
+      )}
+    </View>
   );//return (<Text>blud</Text>)
 };
 

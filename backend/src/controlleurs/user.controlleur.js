@@ -5,16 +5,19 @@ export async function addAddress (req,res){
         const { label, fullName, streetAddress, city, state, ZIPcode, phoneNumber, isDefault } = req.body;
 
         if(!label || !fullName || !streetAddress || !city || !state || !ZIPcode || !phoneNumber){
-            return res.status(400).json({ message : "Tous les champs sont obligatoires"})
+            return res.status(400).json({ message : "Tous les champs sont obligatoires",addresses: []}) // ⚠️ toujours renvoyer addresses})
         }
         const user = req.user;
+
+        if (!user.addresses) user.addresses = []; // ⚠️ sécuriser addresses
+        
         if(isDefault){
-            user.addresses.forEach(addr => {
+            user?.addresses?.forEach(addr => {
                 addr.isDefault = false;
             });
         }
 
-        user.addresses.push({
+        user?.addresses?.push({
             label,
             fullName,
             streetAddress,
@@ -33,16 +36,18 @@ export async function addAddress (req,res){
     }
 }
 
-export async function getAddresses (req,res){
-    try {
-        const user = req.user
+export async function getAddresses(req, res) {
+  try {
+    const user = req.user;
 
+    // Tu n’as pas besoin de save ici pour un simple GET
+    // await user.save();
 
-        await user.save();
-        res.status(201).json({ addresses : user.addresses})
-    } catch (error) {
-        
-    }
+    res.status(200).json({ addresses: user.addresses });
+  } catch (error) {
+    console.error("Erreur lors de la récupération des adresses", error);
+    res.status(500).json({ message: "Erreur interne du serveur" });
+  }
 }
 
 export async function updateAddress (req,res){

@@ -7,7 +7,7 @@ const AuthScreen = () => {
     return(
         <View className='px-8 flex-1 justify-center items-center bg-white'>
             <Image source={require("../../assets/images/auth-image.png")} className='size-96' resizeMode='contain'/>
-            <Text>Index</Text>
+            {/*<Text>Index</Text>*/}
             <View className='gap-2 mt-3'>
                 <TouchableOpacity className='flex-row items-center justify-center bg-white border border-gray-300 rounded-full px-6 py-2' 
                 onPress={() => handleSocialAuth("oauth_google")} 

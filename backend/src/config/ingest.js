@@ -19,7 +19,7 @@ const syncUser = ingest.createFunction(
             email: email_addresses?.[0]?.email_address,
             name : `${first_name || ""} ${last_name || ""}` || "User",
             imageURL : image_url || "",
-            adresses : [],
+            addresses : [],
             wishlist : [],
         }
         await User.create(newUser);

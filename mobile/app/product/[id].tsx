@@ -21,8 +21,10 @@ const { width } = Dimensions.get("window");
 
 const ProductDetailScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: product, isError, isLoading } = useProduct(id);
+  const { data:product, isError, isLoading } = useProduct(id);
   const { addToCart, isAddingToCart } = useCart();
+  //const product = data
+   console.log("produit   : ",product)
 
   const { isInWishlist, toggleWishlist, isAddingToWishlist, isRemovingFromWishlist } =
     useWishlist();
@@ -57,8 +59,9 @@ const ProductDetailScreen = () => {
 
   return (
     <SafeScreen>
+      <View>
       {/* HEADER */}
-      <View className="absolute top-0 left-0 right-0 z-10 px-6 pt-20 pb-4 flex-row items-center justify-between">
+      <View className="absolute top-0 left-0 right-0 z-10 px-6 pt-20 pb-4 flex-row items-center justify-between w-full">
         <TouchableOpacity
           className="bg-black/50 backdrop-blur-xl w-12 h-12 rounded-full items-center justify-center"
           onPress={() => router.back()}
@@ -140,7 +143,7 @@ const ProductDetailScreen = () => {
             <View className="flex-row items-center bg-surface px-3 py-2 rounded-full">
               <Ionicons name="star" size={16} color="#FFC107" />
               <Text className="text-text-primary font-bold ml-1 mr-2">
-                {product.averageRating.toFixed(1)}
+                {product.averageRating?.toFixed(1)}
               </Text>
               <Text className="text-text-secondary text-sm">({product.totalReviews} reviews)</Text>
             </View>
@@ -206,9 +209,10 @@ const ProductDetailScreen = () => {
           </View>
         </View>
       </ScrollView>
+      
 
       {/* Bottom Action Bar */}
-      <View className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-xl border-t border-surface px-6 py-4 pb-8">
+      <View className=" left-0 right-0 bg-background/95 backdrop-blur-xl border-t border-surface px-6 py-4 pb-8 mb-20 w-full">
         <View className="flex-row items-center gap-3">
           <View className="flex-1">
             <Text className="text-text-secondary text-sm mb-1">Total Price</Text>
@@ -243,7 +247,7 @@ const ProductDetailScreen = () => {
       </View>
       {/* Confirmation Modal */}
       <Modal transparent animationType="fade" visible={modalVisible}>
-        <View className="flex-1 justify-center items-center bg-black/60 px-6">
+        <View className="flex-1 justify-center items-center bg-black/60 px-6 w-full">
           <View className="bg-surface w-full rounded-3xl p-6">
 
             <Text className="text-text-primary text-xl font-bold mb-3">
@@ -291,7 +295,7 @@ const ProductDetailScreen = () => {
             Added to cart successfully!
           </Text>
         </View>
-      )}
+      )}</View>
     </SafeScreen>
   );
 };

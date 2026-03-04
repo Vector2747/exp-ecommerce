@@ -47,6 +47,13 @@
           "project": "mobile-monitoring",
           "organization": "tank-damages"
         }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.anonymous.mobile",
+          "enableGooglePay": true
+        }
       ]
     ],
     "experiments": {

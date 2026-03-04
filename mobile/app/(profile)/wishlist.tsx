@@ -227,7 +227,7 @@ export default WishlistScreen;
 function LoadingUI() {
   return (
     <SafeScreen>
-      <View className="px-6 pb-5 border-b border-surface flex-row items-center">
+      <View className="px-6 pb-5 border-b border-surface flex-row items-center w-full">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <Ionicons name="arrow-back" size={28} color="#FFFFFF" />
         </TouchableOpacity>
@@ -244,7 +244,7 @@ function LoadingUI() {
 function ErrorUI() {
   return (
     <SafeScreen>
-      <View className="px-6 pb-5 border-b border-surface flex-row items-center">
+      <View className="px-6 pb-5 border-b border-surface flex-row items-center w-full">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>

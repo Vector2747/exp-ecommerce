@@ -103,7 +103,7 @@ const ProductDetailScreen = () => {
               setSelectedImageIndex(index);
             }}
           >
-            {product.images.map((image: string, index: number) => (
+            {product?.images?.map((image: string, index: number) => (
               <View key={index} style={{ width }}>
                 <Image source={image} style={{ width, height: 400 }} contentFit="cover" />
               </View>
@@ -112,7 +112,7 @@ const ProductDetailScreen = () => {
 
           {/* Image Indicators */}
           <View className="absolute bottom-4 left-0 right-0 flex-row justify-center gap-2">
-            {product.images.map((_: any, index: number) => (
+            {product?.images?.map((_: any, index: number) => (
               <View
                 key={index}
                 className={`h-2 rounded-full ${

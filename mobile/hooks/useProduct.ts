@@ -9,7 +9,8 @@ export const useProduct = (productId: string) => {
     queryKey: ["product", productId],
     queryFn: async () => {
       const { data } = await api.get(`/products/${productId}`);
-      return data;
+      console.log("PRODUCT API RESPONSE:", data); // 👈 AJOUTE ÇA
+      return data?.product;
     },
     enabled: !!productId,
   });

@@ -20,6 +20,20 @@ const app = express();
 
 const __dirname = path.resolve();
 
+// special handling: Stripe webhook needs raw body BEFORE any body parsing middleware
+// apply raw body parser conditionally only to webhook endpoint
+app.use(
+  "/api/payment",
+  (req, res, next) => {
+    if (req.originalUrl === "/api/payment/webhook") {
+      express.raw({ type: "application/json" })(req, res, next);
+    } else {
+      express.json()(req, res, next); // parse json for non-webhook routes
+    }
+  },
+  paymentRoutes
+);
+
 app.use(express.json());
 app.use(clerkMiddleware());//  clerkMiddleware() est un middleware qui permet de vérifier si l'utilisateur est connecté ou pas. Si l'utilisateur est connecté, il ajoute les informations de l'utilisateur dans la requête (req.user) et passe à la suite. Si l'utilisateur n'est pas connecté, il renvoie une erreur 401 (Unauthorized).
 
@@ -34,7 +48,7 @@ app.use("/api/orders", orderRoutes)
 app.use("/api/reviews", reviewRoutes)
 app.use("/api/products", productRoutes)
 app.use("/api/cart", cartRoutes)
-app.use("/api/payement", paymentRoutes)
+//app.use("/api/payement", paymentRoutes)
 
 app.get("/api/calling", (req,res) =>{
     res.status(200).json({message: "succes"})// donc le statut 200 veux dire succes et 500 echec ?

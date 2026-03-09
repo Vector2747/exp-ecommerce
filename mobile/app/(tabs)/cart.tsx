@@ -88,7 +88,7 @@ const CartScreen = () => {
       setPaymentLoading(true);
 
       // create payment intent with cart items and shipping address
-      const { data } = await api.post("/payment/create-intent", {
+      const { data } = await api.post("/payement/create-intent", {
         cartItems,
         shippingAddress: {
           fullName: selectedAddress.fullName,
@@ -147,6 +147,7 @@ const CartScreen = () => {
         cartTotal: total,
         itemCount: cartItems.length,
       });
+      console.log("error   : " , error)
 
       Alert.alert("Error", "Failed to process payment");
     } finally {

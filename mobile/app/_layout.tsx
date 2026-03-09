@@ -3,6 +3,7 @@ import "../global.css"
 import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from "@tanstack/react-query"
 import { ClerkProvider } from '@clerk/clerk-expo'
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -58,7 +59,9 @@ export default Sentry.wrap(function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
-        <Stack screenOptions={{ headerShown : false}}/>
+        <StripeProvider publishableKey={process.env.STRIPE_PUBLISHABLE_KEY!}>
+          <Stack screenOptions={{ headerShown : false}}/>
+        </StripeProvider>
       </QueryClientProvider>
     </ClerkProvider>
     )

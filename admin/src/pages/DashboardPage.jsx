@@ -1,6 +1,7 @@
 import {useQuery} from "@tanstack/react-query"
 import { orderApi, statsApi } from "../lib/api.js";
 import { DollarSignIcon, PackageIcon, ShoppingBagIcon, UserIcon } from "lucide-react";
+import { getOrderStatusBadge } from "../../src/lib/utils.js"
 
 function DashboardPage(params) {
     const { data:ordersData, isLoading:ordersLoading } = useQuery({

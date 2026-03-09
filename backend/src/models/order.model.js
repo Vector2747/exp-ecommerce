@@ -1,4 +1,4 @@
-//import { PhoneNumber } from "@clerk/express";
+//import { phoneNumber } from "@clerk/express";
 import mongoose from "mongoose";
 
 
@@ -50,7 +50,7 @@ const shippingAddressSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    PhoneNumber : {
+    phoneNumber : {
         type : String,
         required : true
     }

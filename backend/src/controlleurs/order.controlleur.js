@@ -54,7 +54,7 @@ export async function getOrders (req,res){
         // verifier si la commande a ete commente
         const orderIds = orders.map(order => order._id);
         const reviews = await Review.find({ orderId : { $in : orderIds}})
-        const reviewedOrderIds = new set(reviews.map(review => review.orderId.toString()));
+        const reviewedOrderIds = new Set(reviews.map(review => review.orderId.toString()));
 
         const orderWithComments = await Promise.all(
             orders.map(async (order) => {

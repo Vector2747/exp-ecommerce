@@ -88,17 +88,18 @@ const CartScreen = () => {
       setPaymentLoading(true);
 
       // create payment intent with cart items and shipping address
-      const { data } = await api.post("/payement/create-intent", {
+      const { data } = await api.post("/payment/create-intent", {
         cartItems,
         shippingAddress: {
           fullName: selectedAddress.fullName,
           streetAddress: selectedAddress.streetAddress,
           city: selectedAddress.city,
           state: selectedAddress.state,
-          zipCode: selectedAddress.ZIPcode,
+          ZIPcode: selectedAddress.ZIPcode,
           phoneNumber: selectedAddress.phoneNumber,
         },
       });
+      console.log("donc    : ",selectedAddress.phoneNumber)
 
       const { error: initError } = await initPaymentSheet({
         paymentIntentClientSecret: data.clientSecret,

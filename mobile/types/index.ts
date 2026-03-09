@@ -46,7 +46,7 @@ export interface Order {
     streetAddress: string;
     city: string;
     state: string;
-    zipCode: string;
+    ZIPcode: string;
     phoneNumber: string;
   };
   paymentResult: {

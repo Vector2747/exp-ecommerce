@@ -86,6 +86,8 @@ export async function createPaymentIntent(req, res) {
       },
       // in the webhooks section we will use this metadata
     });
+    console.log("Payment succeeded:", paymentIntent.id);
+    console.log("Stripe metadata:", paymentIntent.metadata);
 
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
